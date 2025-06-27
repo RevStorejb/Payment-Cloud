@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CLOUD PAYMENT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('https://files.catbox.moe/winra2.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .glow-text {
+      font-size: 2em;
+      margin: 20px 0;
+      text-shadow: 0 0 5px #fff,
+                   0 0 10px #ff00ff,
+                   0 0 20px #00ffff,
+                   0 0 40px #ff00ff;
+      animation: flicker 2s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% {opacity: 1;}
+      50% {opacity: 0.8;}
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #ffffff;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 20px #0ff, 0 0 30px #f0f, 0 0 50px #0ff;
+      display: none;
+    }
+
+    .profile-img {
+      width: 100px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      margin-bottom: 10px;
+    }
+
+    .btn-select {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 25px;
+      background-color: #00ffff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 0 10px #0ff, 0 0 20px #ff00ff;
+    }
+
+    .btn-select:hover {
+      background-color: #00cccc;
+    }
+
+    .payment-display {
+      margin-top: 20px;
+      display: none;
+    }
+
+    .payment-display img {
+      width: 250px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
+    }
+
+    .phone-number {
+      font-size: 1.5em;
+      color: #00ffea;
+      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 15px 30px;
+      background-color: #ff00ff;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.2em;
+      cursor: pointer;
+      box-shadow: 0 0 10px #f0f, 0 0 20px #0ff;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #f0f, 0 0 30px #0ff;
+    }
+
+    hr {
+      border: 1px solid #fff;
+      box-shadow: 0 0 10px #0ff;
+      margin: 30px 0;
+    }
+
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+
+    .popup input {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 80%;
+      max-width: 300px;
+      font-size: 1em;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .popup button {
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      background-color: #00ffff;
+      color: black;
+      cursor: pointer;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    .popup button:hover {
+      background-color: #00cccc;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Form Masuk -->
+  <div class="popup" id="popup">
+    <h2 class="glow-text">Masukkan Nama Anda</h2>
+    <input type="text" id="buyerName" placeholder="Contoh: Andi Budi">
+    <button onclick="enterSite()">Masuk</button>
+  </div>
+
+  <!-- Isi Halaman -->
+  <div class="container" id="mainContent">
+    <img src="https://files.catbox.moe/19uo1n.jpg" alt="Profil" class="profile-img">
+    <h1 class="glow-text">CLOUD PAYMENT</h1>
+    <hr>
+
+    <h2 class="glow-text">Pilih Metode Pembayaran</h2>
+    <button class="btn-select" onclick="showPayment('qris')">QRIS</button>
+    <button class="btn-select" onclick="showPayment('dana')">DANA</button>
+
+    <div class="payment-display" id="qrisSection">
+      <h2 class="glow-text">QRIS</h2>
+      <img src="https://files.catbox.moe/elccow.jpg" alt="QRIS">
+    </div>
+
+    <div class="payment-display" id="danaSection">
+      <h2 class="glow-text">DANA</h2>
+      <div class="phone-number">0851-8903-5394</div>
+    </div>
+
+    <a class="btn" id="waBtn" href="#" target="_blank">KIRIM BUKTI TRANSFER</a>
+  </div>
+
+  <script>
+    function enterSite() {
+      const name = document.getElementById('buyerName').value.trim();
+      if (name === "") {
+        alert("Nama harus diisi terlebih dahulu.");
+      } else {
+        document.getElementById('popup').style.display = "none";
+        document.getElementById('mainContent').style.display = "block";
+
+        const message = `Halo admin, saya sudah transfer. Berikut bukti pembayaran saya atas nama ${name}...`;
+        const waLink = "https://wa.me/6285189035394?text=" + encodeURIComponent(message);
+        document.getElementById('waBtn').href = waLink;
+      }
+    }
+
+    function showPayment(method) {
+      document.getElementById('qrisSection').style.display = method === 'qris' ? 'block' : 'none';
+      document.getElementById('danaSection').style.display = method === 'dana' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
